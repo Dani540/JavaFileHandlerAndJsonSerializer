@@ -20,6 +20,7 @@ public class FileManagement implements IFileManagement {
     public boolean createFile(String path) {
         String dir = getDir(path);
         if (!isDirExist(dir)) createDir(dir);
+        if (isFileExist(path)) return false;
         try {
             File file = new File(path);
             return file.createNewFile();
@@ -227,14 +228,11 @@ public class FileManagement implements IFileManagement {
         if (isFileExist(path)) {
             try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
                 String line;
-                int currentLineNumber = 0;
-                while ((line = reader.readLine()) != null) {
-                    currentLineNumber++;
-                    if (currentLineNumber >= start && currentLineNumber <= bound) {
+                int lineCounter = 0;
+                while ((line = reader.readLine()) != null && lineCounter <= bound) {
+                    lineCounter++;
+                    if (lineCounter >= start && lineCounter <= bound) {
                         lines.add(line);
-                    }
-                    if (currentLineNumber > bound) {
-                        break; // Detener la lectura cuando se alcance el límite superior
                     }
                 }
             } catch (IOException e) {
@@ -254,10 +252,11 @@ public class FileManagement implements IFileManagement {
      * @throws IllegalArgumentException if the provided path points to a file
      *         that is not located within a directory.
      */
-    private String getDir(String path) {
+    @Override
+    public String getDir(String path) {
         List<String> words = new ArrayList<>(List.of(path.split("/")));
         if (words.size() <= 1) {
-            throw new IllegalArgumentException("The provided path does not point to a file within a directory.");
+            throw new IllegalArgumentException("The provided path doesn't point to a file within a directory.");
         }
         words.remove(words.size() - 1);
         return String.join("/", words);

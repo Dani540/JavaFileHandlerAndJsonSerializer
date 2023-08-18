@@ -22,7 +22,7 @@ public class Main {
      * @param args The command-line arguments (unused in this context).
      */
     public static void main(String[] args) {
-
+/*
         // Create an Application instance with necessary dependencies
         Application application = new Application(new FileManagement(), new Serializer<>());
 
@@ -49,6 +49,10 @@ public class Main {
                                 myUsers.get(i).hashCode()==againMyUsers.get(i).hashCode() &&
                                 myUsers.get(i).equals(againMyUsers.get(i))
                         )
+        );
+*/
+        System.out.println(
+                new FileManagement().readLines("data/example.txt", 17)
         );
     }
 }

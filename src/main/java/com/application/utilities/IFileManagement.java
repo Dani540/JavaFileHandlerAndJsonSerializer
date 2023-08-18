@@ -95,5 +95,7 @@ public interface IFileManagement {
      * @return true if the content was written successfully, false otherwise.
      */
     boolean writeLine(String path, String content);
+
+    String getDir(String fileToTest);
 }
 
