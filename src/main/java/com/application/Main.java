@@ -51,8 +51,8 @@ public class Main {
                         )
         );
 */
-        System.out.println(
-                new FileManagement().readLines("data/example.txt", 17)
-        );
+
+
+        new FileManagement().readLines("data/example.txt", 3,7).forEach(System.out::println);
     }
 }

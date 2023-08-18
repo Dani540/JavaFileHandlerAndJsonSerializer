@@ -3,6 +3,8 @@ package com.application.utilities;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * This class implements the IFileManagement interface and provides methods for
@@ -224,22 +226,9 @@ public class FileManagement implements IFileManagement {
      */
     @Override
     public List<String> readLines(String path, int start, int bound) {
-        List<String> lines = new ArrayList<>();
-        if (isFileExist(path)) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-                String line;
-                int lineCounter = 0;
-                while ((line = reader.readLine()) != null && lineCounter <= bound) {
-                    lineCounter++;
-                    if (lineCounter >= start && lineCounter <= bound) {
-                        lines.add(line);
-                    }
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return lines;
+        if(bound<0) return null;
+        List<String> lines = readAllLines(path);
+        return IntStream.range(start-1, bound).mapToObj(lines::get).toList(); // 1 is subtracted from the "start" param because the lines of the text file start counting from 1 instead of 0
     }
 
     /**
