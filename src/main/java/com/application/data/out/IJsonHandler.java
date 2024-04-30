@@ -1,9 +1,9 @@
-package com.application.utilities;
+package com.application.data.out;
 
 /**
  * This interface defines methods for serializing and deserializing objects.
  */
-public interface ISerializer<E> {
+public interface IJsonHandler<E> {
     /**
      * Serializes an object to a JSON string.
      * @param entity The object to be serialized.

@@ -1,14 +1,15 @@
 /**
- * This class is an implementation of the ISerializer<> interface and handles
+ * This class is an implementation of the IJsonHandler<> interface and handles
  * of serialization and deserialization of instances based on a generic.
  * <p>
  * Use the GSon library for this purpose.
  */
-package com.application.utilities;
+package com.application.data.imp;
 
+import com.application.data.out.IJsonHandler;
 import com.google.gson.Gson;
 
-public class Serializer<E> implements ISerializer<E> {
+public class JsonHandler<E> implements IJsonHandler<E> {
 
     /**
      * Serializes an object using a GSon instance.

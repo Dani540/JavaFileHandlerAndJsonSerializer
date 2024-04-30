@@ -1,13 +1,15 @@
 package com.application.utilities;
 
+import com.application.data.imp.FileHandler;
+import com.application.data.out.IFileHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileManagementTest {
-    private final IFileManagement fileManagement = new FileManagement();
+public class FileHandlerTest {
+    private final IFileHandler fileManagement = new FileHandler();
 
     private final String fileToTest = "test/to/test.txt";
 

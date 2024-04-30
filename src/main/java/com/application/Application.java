@@ -1,9 +1,9 @@
 package com.application;
 
+import com.application.data.imp.JsonHandler;
 import com.application.entities.User;
-import com.application.utilities.IFileManagement;
+import com.application.data.out.IFileHandler;
 import com.application.utilities.PasswordGenerator;
-import com.application.utilities.Serializer;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -12,23 +12,23 @@ import java.util.stream.IntStream;
  * Manages user-related operations and data using provided utilities.
  * This class facilitates the creation, serialization, and management of user entities.
  * <p>
- * This class use an implementation of IFileManagement used for file operations.
- * This class use a serializer implementation for handling user object serialization.
+ * This class use an implementation of IFileHandler used for file operations.
+ * This class use a jsonHandler implementation for handling user object serialization.
  */
 public class Application {
     private final int DEFAULT_USER_LIST_SIZE = 12;
-    private final IFileManagement fileManagement;
-    private final Serializer<User> serializer;
+    private final IFileHandler fileManagement;
+    private final JsonHandler<User> jsonHandler;
 
     /**
      * Constructs an Application instance with the given dependencies.
      *
-     * @param fileManagement An implementation of IFileManagement used for file operations.
-     * @param serializer A serializer implementation for handling user object serialization.
+     * @param fileManagement An implementation of IFileHandler used for file operations.
+     * @param jsonHandler A jsonHandler implementation for handling user object serialization.
      */
-    public Application(IFileManagement fileManagement, Serializer<User> serializer) {
+    public Application(IFileHandler fileManagement, JsonHandler<User> jsonHandler) {
         this.fileManagement = fileManagement;
-        this.serializer = serializer;
+        this.jsonHandler = jsonHandler;
     }
 
     /**
@@ -61,7 +61,7 @@ public class Application {
      * @return A list of serialized JSON strings representing the users.
      */
     public List<String> saveUsers(List<User> users){
-        return users.stream().map(serializer::serialize).toList();
+        return users.stream().map(jsonHandler::serialize).toList();
     }
 
     /**
@@ -72,7 +72,7 @@ public class Application {
      * @return true if all users were successfully serialized and saved, false otherwise.
      */
     public boolean saveUsers(List<User> users, String path){
-        return users.stream().allMatch(user -> fileManagement.writeLine(path, serializer.serialize(user)));
+        return users.stream().allMatch(user -> fileManagement.writeLine(path, jsonHandler.serialize(user)));
     }
 
     /**
@@ -83,7 +83,7 @@ public class Application {
      */
     public List<User> getUsers(List<String> jsonLog){
         return jsonLog.stream()
-                .map(json -> serializer.deserialize(json, User.class))
+                .map(json -> jsonHandler.deserialize(json, User.class))
                 .toList();
     }
 }

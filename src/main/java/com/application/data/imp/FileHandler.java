@@ -1,16 +1,18 @@
-package com.application.utilities;
+package com.application.data.imp;
+
+import com.application.data.FileManagementException;
+import com.application.data.out.IFileHandler;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
- * This class implements the IFileManagement interface and provides methods for
+ * This class implements the IFileHandler interface and provides methods for
  * managing files and directories.
  */
-public class FileManagement implements IFileManagement {
+public class FileHandler implements IFileHandler {
 
     /**
      * Creates a new file at the specified path.
@@ -222,13 +224,20 @@ public class FileManagement implements IFileManagement {
      * @param start The starting line number (inclusive).
      * @param bound The maximum number of lines to read.
      * @return A list containing the requested range of lines from the file.
-     * @throws RuntimeException if an error occurs during file reading.
+     * @throws FileManagementException This is a custom exception for handling line limits on reading.
      */
     @Override
     public List<String> readLines(String path, int start, int bound) {
-        if(bound<0) return null;
         List<String> lines = readAllLines(path);
-        return IntStream.range(start-1, bound).mapToObj(lines::get).toList(); // 1 is subtracted from the "start" param because the lines of the text file start counting from 1 instead of 0
+        try{
+            if(start <= 0 || start>lines.size() || bound<0 || bound > lines.size())
+                throw new FileManagementException("Bounds are invalid!", lines.size());
+        }catch (FileManagementException e){
+            return lines; // we return the entire list of lines.
+        }
+        return IntStream.range(start-1, bound)// 1 is subtracted from the "start" param because the lines of the text file start counting from 1 instead of 0
+                .mapToObj(lines::get)
+                .toList();
     }
 
     /**

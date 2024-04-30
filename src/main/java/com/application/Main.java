@@ -1,12 +1,5 @@
 package com.application;
 
-import com.application.entities.User;
-import com.application.utilities.FileManagement;
-import com.application.utilities.Serializer;
-
-import java.util.List;
-import java.util.stream.IntStream;
-
 /**
  * Entry point of the application.
  * This class demonstrates the usage of the Application class by creating users,
@@ -24,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
 /*
         // Create an Application instance with necessary dependencies
-        Application application = new Application(new FileManagement(), new Serializer<>());
+        Application application = new Application(new FileHandler(), new JsonHandler<>());
 
         // Create a list of users
         List<User> myUsers = application.createUsers();
@@ -34,7 +27,7 @@ public class Main {
 
         // Deserialize the list of users from the file
         List<User> againMyUsers = application.getUsers(
-                new FileManagement().readAllLines("data/example.txt")
+                new FileHandler().readAllLines("data/example.txt")
         );
 
         // Print the list of users, serialization status, and deserialized users
@@ -52,7 +45,6 @@ public class Main {
         );
 */
 
-
-        new FileManagement().readLines("data/example.txt", 3,7).forEach(System.out::println);
+        //new FileHandler().readLines("data/example.txt", 3,17).forEach(System.out::println);
     }
 }

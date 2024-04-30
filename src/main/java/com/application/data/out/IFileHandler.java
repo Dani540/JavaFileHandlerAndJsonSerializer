@@ -1,11 +1,13 @@
-package com.application.utilities;
+package com.application.data.out;
+
+import com.application.data.FileManagementException;
 
 import java.util.List;
 
 /**
  * This interface defines methods for file and directory management operations.
  */
-public interface IFileManagement {
+public interface IFileHandler {
     /**
      * Creates a new file at the specified path.
      * @param path The path to the new file.
@@ -83,9 +85,10 @@ public interface IFileManagement {
      * @param path The path to the file.
      * @param start The starting line number (inclusive).
      * @param bound The maximum number of lines to read.
+     * @throws FileManagementException This is a custom exception for read handling
      * @return A list containing the requested range of lines from the file.
      */
-    List<String> readLines(String path, int start, int bound);
+    List<String> readLines(String path, int start, int bound) throws FileManagementException;
 
     /**
      * Writes a line of content to a file.
